@@ -1,0 +1,51 @@
+{
+    "name": "octopyid/indonesian-boundaries",
+    "type": "library",
+    "license": "MIT",
+    "description": "Indonesian Boundaries",
+    "keywords": [
+        "Laravel",
+        "Indonesia",
+        "Boundaries",
+        "Geo Spatial",
+        "Coordinates"
+    ],
+    "authors": [
+        {
+            "name": "Supian M",
+            "email": "supianidz@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "laravolt/indonesia": "^0.28",
+        "grimzy/laravel-mysql-spatial": "^4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Octopy\\Indonesian\\Boundaries\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Octopy\\Indonesian\\Boundaries\\ServiceProvider"
+            ]
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}
