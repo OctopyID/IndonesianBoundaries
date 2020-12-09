@@ -7,7 +7,7 @@ In the table below is the availability status of the Geometry list of Indonesian
 
 | NO  | NAME                                 | CODE |          STATUS          |
 |:---:|:-------------------------------------|:----:|:------------------------:|
-|  1  | KABUPATEN SIMEULUE                   | 1101 |   :heavy_check_mark:.    |
+|  1  | KABUPATEN SIMEULUE                   | 1101 |    :heavy_check_mark:    |
 |  2  | KABUPATEN ACEH SINGKIL               | 1102 |    :heavy_check_mark:    |
 |  3  | KABUPATEN ACEH SELATAN               | 1103 |    :heavy_check_mark:    |
 |  4  | KABUPATEN ACEH TENGGARA              | 1104 |    :heavy_check_mark:    |
