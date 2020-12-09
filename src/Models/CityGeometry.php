@@ -2,25 +2,25 @@
 
 namespace Octopy\Indonesian\Boundaries\Models;
 
+use Laravolt\Indonesia\Models\city;
 use Illuminate\Database\Eloquent\Model;
-use Laravolt\Indonesia\Models\Province;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 
-class ProvinceGeometry extends Model
+class CityGeometry extends Model
 {
     use SpatialTrait;
 
     /**
      * @var string
      */
-    protected $table = 'province_geometries';
+    protected $table = 'city_geometries';
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'province_id', 'geometry',
+        'city_id', 'geometry',
     ];
 
     /**
@@ -31,7 +31,7 @@ class ProvinceGeometry extends Model
     ];
 
     /**
-     * ProvinceGeometry constructor.
+     * cityGeometry constructor.
      * @param  array $attributes
      */
     public function __construct(array $attributes = [])
@@ -44,8 +44,8 @@ class ProvinceGeometry extends Model
     /**
      * @return BelongsTo
      */
-    public function province() : BelongsTo
+    public function city() : BelongsTo
     {
-        return $this->belongsTo(Province::class, 'province_id');
+        return $this->belongsTo(City::class, 'city_id');
     }
 }

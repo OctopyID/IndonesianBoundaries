@@ -2,8 +2,9 @@
 
 namespace Octopy\Indonesian\Boundaries;
 
-use Octopy\Indonesian\Boundaries\Commands\ProvinceSeedCommand;
+use Octopy\Indonesian\Boundaries\Commands\CitySeedCommand;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Octopy\Indonesian\Boundaries\Commands\ProvinceSeedCommand;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -14,6 +15,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->commands([
             ProvinceSeedCommand::class,
+            CitySeedCommand::class,
         ]);
     }
 
