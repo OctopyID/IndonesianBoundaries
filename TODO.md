@@ -2,7 +2,7 @@
 
 - Geometry Sources
   - [x] Provinces
-  - [ ] Cities
+  - [x] Cities
   - [ ] Districts
   - [ ] Villages
 

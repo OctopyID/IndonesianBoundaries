@@ -8,10 +8,21 @@
 
 Is a Laravel package that provides a basic map of the country of Indonesia.
 
+## Availability of Geometry
+
+Please open the link below for a list of available geometries.
+
+- [PROVINCES](PROVINCES.md)
+- [CITIES](CITIES.md)
+
+## Spatial Source
+
+The spatial source I use comes from [GADM](https://gadm.org/index.html) version 3.6.
+
 ## Installation
 
 ```
-composer require octopyid/indonesian-boundaries
+composer require octopyid/indonesian-boundaries:dev-main
 ```
 
 ## TODO
