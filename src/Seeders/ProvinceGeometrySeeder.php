@@ -8,9 +8,9 @@ use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Grimzy\LaravelMysqlSpatial\Types\Polygon;
 use Grimzy\LaravelMysqlSpatial\Types\LineString;
 use Grimzy\LaravelMysqlSpatial\Types\MultiPolygon;
-use Octopy\Indonesian\Boundaries\Models\ProvinceBorder;
+use Octopy\Indonesian\Boundaries\Models\ProvinceGeometry;
 
-class ProvinceBorderSeeder extends Seeder
+class ProvinceGeometrySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +20,7 @@ class ProvinceBorderSeeder extends Seeder
      */
     public function run()
     {
-        ProvinceBorder::truncate();
+        ProvinceGeometry::truncate();
 
         $sources = collect(
             json_decode(file_get_contents(__DIR__ . '/src/provinces.json'))
@@ -42,7 +42,7 @@ class ProvinceBorderSeeder extends Seeder
             }
 
             try {
-                ProvinceBorder::create([
+                ProvinceGeometry::create([
                     'province_id' => $row->code,
                     'geometry' => new MultiPolygon($polygons),
                 ]);

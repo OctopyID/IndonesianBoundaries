@@ -7,14 +7,14 @@ use Laravolt\Indonesia\Models\Province;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 
-class ProvinceBorder extends Model
+class ProvinceGeometry extends Model
 {
     use SpatialTrait;
 
     /**
      * @var string
      */
-    protected $table = 'province_borders';
+    protected $table = 'province_geometries';
 
     /**
      * @var string[]

@@ -3,7 +3,7 @@
 namespace Octopy\Indonesian\Boundaries\Commands;
 
 use Illuminate\Console\Command;
-use Octopy\Indonesian\Boundaries\Seeders\ProvinceBorderSeeder;
+use Octopy\Indonesian\Boundaries\Seeders\ProvinceGeometrySeeder;
 
 class ProvinceSeedCommand extends Command
 {
@@ -39,7 +39,7 @@ class ProvinceSeedCommand extends Command
     public function handle() : int
     {
         $this->call('db:seed', [
-            '--class' => ProvinceBorderSeeder::class,
+            '--class' => ProvinceGeometrySeeder::class,
         ]);
 
         $this->info('Seeded: Province Boundaries');
