@@ -12,6 +12,8 @@ use Octopy\Indonesian\Boundaries\Models\Casts\GeometryCast;
 
 /**
  * @method search(array|mixed|string[] $province)
+ * @property mixed province
+ * @property mixed province_id
  */
 class ProvinceGeometry extends Model
 {

@@ -12,6 +12,9 @@ class Boundary
      */
     private BoundaryConfig $config;
 
+    /**
+     * Boundary constructor.
+     */
     public function __construct()
     {
         $this->config = App::make(BoundaryConfig::class);

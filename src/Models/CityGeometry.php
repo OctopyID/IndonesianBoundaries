@@ -12,6 +12,8 @@ use Octopy\Indonesian\Boundaries\Models\Casts\GeometryCast;
 
 /**
  * @method search(array|mixed|string[] $city)
+ * @property mixed city
+ * @property mixed city_id
  */
 class CityGeometry extends Model
 {
@@ -76,7 +78,7 @@ class CityGeometry extends Model
     }
 
     /**
-     * cityGeometry constructor.
+     * CityGeometry constructor.
      * @param  array $attributes
      */
     public function __construct(array $attributes = [])

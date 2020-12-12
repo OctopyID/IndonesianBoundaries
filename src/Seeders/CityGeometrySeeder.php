@@ -44,11 +44,11 @@ class CityGeometrySeeder extends Seeder
 
                 try {
                     CityGeometry::create([
-                        'city_id' => $row->code,
+                        'city_id'  => $row->code,
                         'geometry' => new MultiPolygon($polygons),
                     ]);
                 } catch (Exception $exception) {
-                    //
+                    throw $exception;
                 }
             }
         });

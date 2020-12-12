@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMissingParamTypeInspection */
 
 namespace Octopy\Indonesian\Boundaries\Models\Casts;
 
@@ -15,6 +15,7 @@ class GeometryCast implements CastsAttributes
      * @param  mixed  $value
      * @param  array  $attributes
      * @return mixed|void
+     * @noinspection PhpUndefinedVariableInspection
      */
     public function get($model, string $key, $value, array $attributes)
     {

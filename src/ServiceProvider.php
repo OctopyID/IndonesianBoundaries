@@ -59,7 +59,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * @return void
      */
-    protected function registerPublishing()
+    private function registerPublishing()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([

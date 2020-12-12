@@ -47,7 +47,7 @@ class ProvinceGeometrySeeder extends Seeder
                     'geometry' => new MultiPolygon($polygons),
                 ]);
             } catch (Exception $exception) {
-                throw  $exception;
+                throw $exception;
             }
         });
     }

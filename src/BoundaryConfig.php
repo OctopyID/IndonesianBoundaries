@@ -140,10 +140,10 @@ class BoundaryConfig
         );
 
         $this->layerStyle(config('boundary.layer.style', [
-            'color'       => 'black',
+            'color'       => '#000000',
             'weight'      => 0.1,
             'opacity'     => 0.4,
-            'fillColor'   => 'red',
+            'fillColor'   => '#FF0000',
             'fillOpacity' => 0.3,
         ]));
 
@@ -171,7 +171,7 @@ class BoundaryConfig
             ]);
 
             if ($marker['iconUrl'] === 'default') {
-                $marker['iconUrl'] = asset('/vendor/boundary/images/marker.png');
+                $marker['iconUrl'] = asset('/vendor/octopyid/boundary/images/marker.png');
             }
 
             $this->setMarker($marker);
