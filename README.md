@@ -25,6 +25,10 @@ I don't know exactly, but it's been tested on
  - PHP 7.4
  - MySQL 8.0 with SRID support
 
+## TODO
+Look at the [TODO.md](TODO.md) file
+
+
 ## Installation
 
 ```bash
@@ -47,8 +51,9 @@ php artisan octopy:seed:province
 use Octopy\Indonesian\Boundaries\Boundary;
 use Octopy\Indonesian\Boundaries\BoundaryConfig;
 
-Route::get('/', function (Boundary $boundary){
-	// to override global configuration
+Route::get('/', function (Boundary $boundary) {
+	
+    // to override global configuration.
     $boundary->config(function (BoundaryConfig $config){
     	$config->setCenter(-0.789275, 113.921327);
     	$config->setZoom([
@@ -56,12 +61,12 @@ Route::get('/', function (Boundary $boundary){
         ]);
     });
 
-    // Use area code to render the provincial base map,
+    // Use area code to render the provincial base map.
     $boundary->renderProvince([
         63, 11, 20, 32, 51
     ]);
     
-    // Use area code to render the city base map,
+    // Use area code to render the city base map.
     $boundary->renderCity([
         1201, 6310, 6306, 6371
     ]);
@@ -95,9 +100,6 @@ Route::get('/', function (Boundary $boundary){
 </html>
 
 ```
-
-## TODO
-Look at the [TODO.md](TODO.md) file
 
 ## Credits
 

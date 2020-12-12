@@ -17,4 +17,14 @@
     - [x] Size
     - [ ] Color
     - [x] Label
-  - [ ] Color Transition Each Layer
+  - [ ] Different Color Each Layer
+  - [ ] Mouse Event
+    - [ ] Color Transition
+    - [ ] Customisable Event
+
+- Drawable Layer
+  - [ ] Point
+  - [ ] Line
+  - [ ] Polygon
+
+- [ ] Unit Testing
