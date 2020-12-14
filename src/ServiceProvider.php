@@ -26,10 +26,6 @@ class ServiceProvider extends BaseServiceProvider
             return new Boundary;
         });
 
-        $this->app->singleton(BoundaryConfig::class, function () {
-            return new BoundaryConfig;
-        });
-
         $this->commands([
             ProvinceSeedCommand::class,
             CitySeedCommand::class,
@@ -72,7 +68,7 @@ class ServiceProvider extends BaseServiceProvider
 
             $this->publishes([
                 __DIR__ . '/../config/boundary.php' => config_path('boundary.php'),
-            ], 'boundary-config');
+            ], 'boundary-conf');
         }
     }
 
@@ -82,7 +78,7 @@ class ServiceProvider extends BaseServiceProvider
     private function registerDirective(BladeCompiler $compiler)
     {
         $compiler->directive('boundary', function () {
-            return "<?php echo view('octopy::boundary', ['boundary' => app(" . BoundaryConfig::class . "::class)]); ?>";
+            return "<?php echo view('octopy::boundary', ['boundary' => app(" . Boundary::class . "::class)]); ?>";
         });
     }
 

@@ -22,9 +22,9 @@ mix.options({
 })
     .setPublicPath('public')
     .sass('resources/css/app.scss', 'public')
-    .js('resources/js/app.js', 'public')
+    .ts('resources/js/app.ts', 'public')
     .version()
-    .copy('public', '../public/vendor/boundary')
+    .copy('public', '../public/vendor/octopyid/boundary')
     .webpackConfig({
         resolve: {
             symlinks: false,

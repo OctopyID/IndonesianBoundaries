@@ -29,7 +29,7 @@ class BoundaryController extends Controller
      */
     public function __invoke()
     {
-        if ($this->hasType('province')) {
+        if ($this->hasType('prov')) {
             return $this->province(
                 App::make(ProvinceGeometry::class)
             );
@@ -46,7 +46,7 @@ class BoundaryController extends Controller
      */
     protected function province(ProvinceGeometry $geometry)
     {
-        if (is_string($province = $this->request->input('render'))) {
+        if (is_string($province = $this->request->input('data'))) {
             $province = array_map(fn($province) => trim($province), explode(',', $province));
         }
 
@@ -63,7 +63,7 @@ class BoundaryController extends Controller
      */
     protected function city(CityGeometry $geometry)
     {
-        if (is_string($city = $this->request->input('render'))) {
+        if (is_string($city = $this->request->input('data'))) {
             $city = array_map(fn($city) => trim($city), explode(',', $city));
         }
 

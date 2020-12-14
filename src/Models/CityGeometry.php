@@ -11,6 +11,7 @@ use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Octopy\Indonesian\Boundaries\Models\Casts\GeometryCast;
 
 /**
+ * @method get()
  * @method search(array|mixed|string[] $city)
  * @property mixed city
  * @property mixed city_id

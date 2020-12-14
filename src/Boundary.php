@@ -2,56 +2,39 @@
 
 namespace Octopy\Indonesian\Boundaries;
 
-use Closure;
-use Illuminate\Support\Facades\App;
+use Exception;
+use JsonSerializable;
 
-class Boundary
+class Boundary implements JsonSerializable
 {
     /**
-     * @var mixed
+     * @var array
      */
-    private BoundaryConfig $config;
+    private array $container = [];
 
     /**
-     * Boundary constructor.
+     * @param  string $element
+     * @return BaseMap
+     * @throws Exception
      */
-    public function __construct()
+    public function element(string $element) : BaseMap
     {
-        $this->config = App::make(BoundaryConfig::class);
-    }
-
-    /**
-     * @param  Closure|null $closure
-     * @return mixed
-     */
-    public function config(Closure $closure = null)
-    {
-        $config = App::make(BoundaryConfig::class);
-
-        if (is_null($closure)) {
-            return $config;
+        if (! is_string($element)) {
+            $element = config('boundary.element', 'map');
         }
 
-        return $closure($config);
+        if (isset($this->container[$element])) {
+            throw new Exception($element . ' elements already defined.');
+        }
+
+        return $this->container[$element] = new BaseMap;
     }
 
     /**
-     * @param  mixed ...$province
+     * @return array
      */
-    public function renderProvince(...$province)
+    public function jsonSerialize() : array
     {
-        $this->config->search([
-            'province' => is_array($province[0]) ? $province[0] : $province,
-        ]);
-    }
-
-    /**
-     * @param  mixed ...$city
-     */
-    public function renderCity(...$city)
-    {
-        $this->config->search([
-            'city' => is_array($city[0]) ? $city[0] : $city,
-        ]);
+        return $this->container;
     }
 }
