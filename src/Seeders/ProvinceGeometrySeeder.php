@@ -4,6 +4,7 @@ namespace Octopy\Indonesian\Boundaries\Seeders;
 
 use Exception;
 use Illuminate\Database\Seeder;
+use Laravolt\Indonesia\Models\Province;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Grimzy\LaravelMysqlSpatial\Types\Polygon;
 use Grimzy\LaravelMysqlSpatial\Types\LineString;
@@ -42,10 +43,12 @@ class ProvinceGeometrySeeder extends Seeder
             }
 
             try {
-                ProvinceGeometry::create([
-                    'province_id' => $row->code,
-                    'geometry' => new MultiPolygon($polygons),
-                ]);
+                if (Province::whereId($row->code)->count()) {
+                    ProvinceGeometry::create([
+                        'province_id' => $row->code,
+                        'geometry'    => new MultiPolygon($polygons),
+                    ]);
+                }
             } catch (Exception $exception) {
                 throw $exception;
             }

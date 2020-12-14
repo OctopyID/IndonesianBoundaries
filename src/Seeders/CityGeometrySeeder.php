@@ -4,6 +4,7 @@ namespace Octopy\Indonesian\Boundaries\Seeders;
 
 use Exception;
 use Illuminate\Database\Seeder;
+use Laravolt\Indonesia\Models\City;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Grimzy\LaravelMysqlSpatial\Types\Polygon;
 use Grimzy\LaravelMysqlSpatial\Types\LineString;
@@ -43,10 +44,12 @@ class CityGeometrySeeder extends Seeder
                 }
 
                 try {
-                    CityGeometry::create([
-                        'city_id'  => $row->code,
-                        'geometry' => new MultiPolygon($polygons),
-                    ]);
+                    if (City::whereId($row->code)->count()) {
+                        CityGeometry::create([
+                            'city_id'  => $row->code,
+                            'geometry' => new MultiPolygon($polygons),
+                        ]);
+                    }
                 } catch (Exception $exception) {
                     throw $exception;
                 }
