@@ -9,7 +9,7 @@ class CreateProvinceGeometriesTable extends Migration
     /**
      * @var string
      */
-    private $table;
+    private string $table;
 
     /**
      * CreateProvinceBordersTable constructor.
@@ -29,8 +29,7 @@ class CreateProvinceGeometriesTable extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
             $table->char('province_id', 2);
-            $table->multiPolygon('geometry')->nullable();
-            $table->timestamps();
+            $table->multiPolygon('geometry');
 
             $table->foreign('province_id')->references('id')->on(
                 config('laravolt.indonesia.table_prefix') . 'provinces'

@@ -4,15 +4,26 @@ namespace Octopy\Indonesian\Boundaries\Seeders;
 
 use Exception;
 use Illuminate\Database\Seeder;
-use Laravolt\Indonesia\Models\Province;
-use Grimzy\LaravelMysqlSpatial\Types\Point;
-use Grimzy\LaravelMysqlSpatial\Types\Polygon;
-use Grimzy\LaravelMysqlSpatial\Types\LineString;
-use Grimzy\LaravelMysqlSpatial\Types\MultiPolygon;
+use Octopy\Indonesian\Boundaries\GeometryParser;
+use Octopy\Indonesian\Boundaries\Types\GeometryFeature;
 use Octopy\Indonesian\Boundaries\Models\ProvinceGeometry;
 
 class ProvinceGeometrySeeder extends Seeder
 {
+    /**
+     * @var ProvinceGeometry
+     */
+    private ProvinceGeometry $province;
+
+    /**
+     * ProvinceGeometrySeeder constructor.
+     * @param  ProvinceGeometry $province
+     */
+    public function __construct(ProvinceGeometry $province)
+    {
+        $this->province = $province;
+    }
+
     /**
      * Run the database seeds.
      *
@@ -21,32 +32,18 @@ class ProvinceGeometrySeeder extends Seeder
      */
     public function run()
     {
-        ProvinceGeometry::truncate();
+        $this->province->truncate();
 
-        $sources = collect(
-            json_decode(file_get_contents(__DIR__ . '/src/provinces.json'))
+        $collection = GeometryParser::parse(
+            __DIR__ . '/src/provinces.geojson'
         );
 
-        $sources->each(function ($row) {
-            $polygons = [];
-            foreach ($row->coor as $coor) {
-                $points = [];
-                foreach ($coor as $coordinates) {
-                    foreach ($coordinates as $point) {
-                        $points[] = new Point($point[1], $point[0]);
-                    }
-                }
-
-                $polygons[] = new Polygon([
-                    new LineString($points),
-                ]);
-            }
-
+        $collection->each(function (GeometryFeature $row) {
             try {
-                if (Province::whereId($row->code)->count()) {
-                    ProvinceGeometry::create([
-                        'province_id' => $row->code,
-                        'geometry'    => new MultiPolygon($polygons),
+                if ($this->province->valid($row->property('CC_1'))) {
+                    $this->province->create([
+                        'geometry'    => $row->geometry(),
+                        'province_id' => $row->property('CC_1'),
                     ]);
                 }
             } catch (Exception $exception) {

@@ -2,19 +2,19 @@
 
 namespace Octopy\Indonesian\Boundaries\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Laravolt\Indonesia\Models\Province;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
-use Octopy\Indonesian\Boundaries\Models\Casts\GeometryCast;
 
 /**
  * @method get()
  * @method search(array|mixed|string[] $province)
  * @property mixed province
  * @property mixed province_id
+ * @method static truncate()
+ * @method static create(array $array)
  */
 class ProvinceGeometry extends Model
 {
@@ -42,13 +42,6 @@ class ProvinceGeometry extends Model
     /**
      * @var string[]
      */
-    protected $casts = [
-        'geometry' => GeometryCast::class,
-    ];
-
-    /**
-     * @var string[]
-     */
     protected $with = [
         'province',
     ];
@@ -64,7 +57,7 @@ class ProvinceGeometry extends Model
      * @var string[]
      */
     protected $hidden = [
-        'id', 'province_id', 'province', 'created_at', 'updated_at',
+        'id', 'province_id', 'province',
     ];
 
     /**
@@ -87,6 +80,19 @@ class ProvinceGeometry extends Model
         parent::__construct($attributes);
 
         $this->table = config('laravolt.indonesia.table_prefix') . $this->table;
+    }
+
+    /**
+     * @param  int|null $code
+     * @return bool
+     */
+    public function valid(?int $code) : bool
+    {
+        if (is_null($code)) {
+            return false;
+        }
+
+        return Province::whereId($code)->count() !== 0;
     }
 
     /**

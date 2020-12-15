@@ -4,15 +4,26 @@ namespace Octopy\Indonesian\Boundaries\Seeders;
 
 use Exception;
 use Illuminate\Database\Seeder;
-use Laravolt\Indonesia\Models\City;
-use Grimzy\LaravelMysqlSpatial\Types\Point;
-use Grimzy\LaravelMysqlSpatial\Types\Polygon;
-use Grimzy\LaravelMysqlSpatial\Types\LineString;
-use Grimzy\LaravelMysqlSpatial\Types\MultiPolygon;
 use Octopy\Indonesian\Boundaries\Models\CityGeometry;
+use Octopy\Indonesian\Boundaries\Types\GeometryFeature;
+use Octopy\Indonesian\Boundaries\GeometryParser;
 
 class CityGeometrySeeder extends Seeder
 {
+    /**
+     * @var CityGeometry
+     */
+    private CityGeometry $city;
+
+    /**
+     * CityGeometrySeeder constructor.
+     * @param  CityGeometry $city
+     */
+    public function __construct(CityGeometry $city)
+    {
+        $this->city = $city;
+    }
+
     /**
      * Run the database seeds.
      *
@@ -21,38 +32,22 @@ class CityGeometrySeeder extends Seeder
      */
     public function run()
     {
-        CityGeometry::truncate();
+        $this->city->truncate();
 
-        $sources = collect(
-            json_decode(file_get_contents(__DIR__ . '/src/cities.json'))
+        $collection = GeometryParser::parse(
+            __DIR__ . '/src/cities.geojson'
         );
 
-        $sources->each(function ($cities) {
-            foreach ($cities as $city => $row) {
-                $polygons = [];
-                foreach ($row->coor as $coor) {
-                    $points = [];
-                    foreach ($coor as $coordinates) {
-                        foreach ($coordinates as $point) {
-                            $points[] = new Point($point[1], $point[0]);
-                        }
-                    }
-
-                    $polygons[] = new Polygon([
-                        new LineString($points),
+        $collection->each(function (GeometryFeature $row) {
+            try {
+                if ($this->city->valid($row->property('CC_2'))) {
+                    $this->city->create([
+                        'geometry' => $row->geometry(),
+                        'city_id'  => $row->property('CC_2'),
                     ]);
                 }
-
-                try {
-                    if (City::whereId($row->code)->count()) {
-                        CityGeometry::create([
-                            'city_id'  => $row->code,
-                            'geometry' => new MultiPolygon($polygons),
-                        ]);
-                    }
-                } catch (Exception $exception) {
-                    throw $exception;
-                }
+            } catch (Exception $exception) {
+                throw $exception;
             }
         });
     }

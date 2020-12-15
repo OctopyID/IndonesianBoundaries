@@ -29,8 +29,7 @@ class CreateCityGeometriesTable extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
             $table->char('city_id', 4);
-            $table->multiPolygon('geometry')->nullable();
-            $table->timestamps();
+            $table->multiPolygon('geometry');
 
             $table->foreign('city_id')->references('id')->on(
                 config('laravolt.indonesia.table_prefix') . 'cities'
