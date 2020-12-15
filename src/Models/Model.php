@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 
-/*
+/**
  * @property array properties
  *
  * @method get()
@@ -14,7 +14,6 @@ use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
  * @method search(array|mixed|string[] $city)
  * @method create(array $array)
  */
-
 abstract class Model extends Eloquent
 {
     use SpatialTrait;

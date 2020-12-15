@@ -60,7 +60,7 @@ class CityGeometry extends Model
             return false;
         }
 
-        return City::whereId($code)->count() !== 0;
+        return City::where('id', $code)->count() !== 0;
     }
 
     /**

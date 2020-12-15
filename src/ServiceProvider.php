@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\View\Compilers\BladeCompiler;
 use Octopy\Indonesian\Boundaries\Commands\CitySeedCommand;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Octopy\Indonesian\Boundaries\Commands\DistrictSeedCommand;
 use Octopy\Indonesian\Boundaries\Commands\ProvinceSeedCommand;
 use Octopy\Indonesian\Boundaries\Http\Controllers\BoundaryController;
 
@@ -29,6 +30,7 @@ class ServiceProvider extends BaseServiceProvider
         $this->commands([
             ProvinceSeedCommand::class,
             CitySeedCommand::class,
+            DistrictSeedCommand::class,
         ]);
     }
 
