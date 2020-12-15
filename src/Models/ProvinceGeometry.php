@@ -6,20 +6,13 @@ use Laravolt\Indonesia\Models\Province;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 
 /**
- * @method get()
- * @method search(array|mixed|string[] $province)
  * @property mixed province
  * @property mixed province_id
- * @method static truncate()
- * @method static create(array $array)
  */
 class ProvinceGeometry extends Model
 {
-    use SpatialTrait;
-
     /**
      * @var string
      */
@@ -35,22 +28,8 @@ class ProvinceGeometry extends Model
     /**
      * @var string[]
      */
-    protected $spatialFields = [
-        'geometry',
-    ];
-
-    /**
-     * @var string[]
-     */
     protected $with = [
         'province',
-    ];
-
-    /**
-     * @var string[]
-     */
-    protected $appends = [
-        'properties',
     ];
 
     /**
@@ -72,17 +51,6 @@ class ProvinceGeometry extends Model
     }
 
     /**
-     * ProvinceGeometry constructor.
-     * @param  array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        $this->table = config('laravolt.indonesia.table_prefix') . $this->table;
-    }
-
-    /**
      * @param  int|null $code
      * @return bool
      */
@@ -97,12 +65,12 @@ class ProvinceGeometry extends Model
 
     /**
      * @param  Builder $builder
-     * @param  array   $provinces
+     * @param  array   $search
      * @return Collection
      */
-    public function scopeSearch(Builder $builder, array $provinces) : Collection
+    public function scopeSearch(Builder $builder, array $search) : Collection
     {
-        return $builder->whereIn('province_id', $provinces)->get();
+        return $builder->whereIn('province_id', $search)->get();
     }
 
     /**

@@ -6,20 +6,13 @@ use Illuminate\Support\Collection;
 use Laravolt\Indonesia\Models\City;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 
 /**
- * @method get()
- * @method search(array|mixed|string[] $city)
- * @method truncate()
- * @method create(array $array)
  * @property mixed city
  * @property mixed city_id
  */
 class CityGeometry extends Model
 {
-    use SpatialTrait;
-
     /**
      * @var string
      */
@@ -35,22 +28,8 @@ class CityGeometry extends Model
     /**
      * @var string[]
      */
-    protected $spatialFields = [
-        'geometry',
-    ];
-
-    /**
-     * @var string[]
-     */
     protected $with = [
         'city',
-    ];
-
-    /**
-     * @var string[]
-     */
-    protected $appends = [
-        'properties',
     ];
 
     /**
@@ -72,17 +51,6 @@ class CityGeometry extends Model
     }
 
     /**
-     * CityGeometry constructor.
-     * @param  array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        $this->table = config('laravolt.indonesia.table_prefix') . $this->table;
-    }
-
-    /**
      * @param  int|null $code
      * @return bool
      */
@@ -97,12 +65,12 @@ class CityGeometry extends Model
 
     /**
      * @param  Builder $builder
-     * @param  array   $cities
+     * @param  array   $search
      * @return Collection
      */
-    public function scopeSearch(Builder $builder, array $cities) : Collection
+    public function scopeSearch(Builder $builder, array $search) : Collection
     {
-        return $builder->whereIn('city_id', $cities)->get();
+        return $builder->whereIn('city_id', $search)->get();
     }
 
     /**
