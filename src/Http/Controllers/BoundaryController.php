@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Octopy\Indonesian\Boundaries\Models\CityGeometry;
 use Octopy\Indonesian\Boundaries\Models\ProvinceGeometry;
+use Octopy\Indonesian\Boundaries\Models\DistrictGeometry;
 
 class BoundaryController extends Controller
 {
@@ -36,6 +37,10 @@ class BoundaryController extends Controller
         } elseif ($this->hasType('city')) {
             return $this->city(
                 App::make(CityGeometry::class)
+            );
+        } elseif ($this->hasType('dist')) {
+            return $this->district(
+                App::make(DistrictGeometry::class)
             );
         }
     }
@@ -72,6 +77,23 @@ class BoundaryController extends Controller
         }
 
         return $geometry->search($city);
+    }
+
+    /**
+     * @param  DistrictGeometry $geometry
+     * @return mixed
+     */
+    protected function district(DistrictGeometry $geometry)
+    {
+        if (is_string($district = $this->request->input('data'))) {
+            $district = array_map(fn($district) => trim($district), explode(',', $district));
+        }
+
+        if (in_array('all', $district)) {
+            return $geometry->get();
+        }
+
+        return $geometry->search($district);
     }
 
     /**
