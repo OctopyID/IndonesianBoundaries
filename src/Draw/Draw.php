@@ -45,6 +45,17 @@ class Draw implements JsonSerializable
     }
 
     /**
+     * @param  array $data
+     * @param  array $conf
+     * @return DrawVillage
+     * @throws Exception\InvalidDataLengthException
+     */
+    public function village(array $data = [], $conf = []) : DrawVillage
+    {
+        return $this->drawable[] = new DrawVillage($data, $conf);
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize() : array

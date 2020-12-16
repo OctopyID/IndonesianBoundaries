@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Octopy\Indonesian\Boundaries\Models\CityGeometry;
+use Octopy\Indonesian\Boundaries\Models\VillageGeometry;
 use Octopy\Indonesian\Boundaries\Models\ProvinceGeometry;
 use Octopy\Indonesian\Boundaries\Models\DistrictGeometry;
 
@@ -41,6 +42,10 @@ class BoundaryController extends Controller
         } elseif ($this->hasType('dist')) {
             return $this->district(
                 App::make(DistrictGeometry::class)
+            );
+        } elseif ($this->hasType('vill')) {
+            return $this->village(
+                App::make(VillageGeometry::class)
             );
         }
     }
@@ -94,6 +99,23 @@ class BoundaryController extends Controller
         }
 
         return $geometry->search($district);
+    }
+
+    /**
+     * @param  VillageGeometry $geometry
+     * @return mixed
+     */
+    protected function village(VillageGeometry $geometry)
+    {
+        if (is_string($village = $this->request->input('data'))) {
+            $village = array_map(fn($village) => trim($village), explode(',', $village));
+        }
+
+        if (in_array('all', $village)) {
+            return $geometry->get();
+        }
+
+        return $geometry->search($village);
     }
 
     /**
