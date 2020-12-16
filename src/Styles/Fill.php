@@ -34,7 +34,7 @@ final class Fill extends BaseStyle
      * @param  int|float $opacity
      * @return Fill
      */
-    public function opacity($opacity = 0.2) : Fill
+    public function opacity($opacity = 0.5) : Fill
     {
         $this->layer->define('fillOpacity', $opacity);
 
@@ -46,6 +46,6 @@ final class Fill extends BaseStyle
      */
     protected function default()
     {
-        $this->color('#FF0000')->opacity();
+        $this->color('#5E81AC')->opacity();
     }
 }

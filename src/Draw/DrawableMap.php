@@ -40,7 +40,9 @@ abstract class DrawableMap implements JsonSerializable
     public function __construct(array $data = [], $conf = [])
     {
         $this->data($data);
-        $this->conf($conf);
+        $this->conf(array_merge([
+            'layer' => config('boundary.layer', []),
+        ], $conf));
     }
 
     /**
