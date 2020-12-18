@@ -1,19 +1,9 @@
 // @ts-ignore
-import * as L from "leaflet";
-import TileLayer from "./TileLayer";
-import Region from "./Region";
+import * as L from 'leaflet';
+import TileLayer from './TileLayer';
+import Region from './Region';
 
 export default class BaseMap {
-
-    /**
-     * @protected
-     */
-    protected data : any;
-
-    /**
-     * @protected
-     */
-    protected root : string;
 
     /**
      * @protected
@@ -21,12 +11,11 @@ export default class BaseMap {
     protected leaf : L.Map;
 
     /**
-     * @param root
-     * @param data
+     * @param root : string
+     * @param data : <any>
      */
-    constructor(root : string, data : any) {
-        this.root = root;
-        this.data = data;
+    constructor(protected root : string, protected data : any) {
+        //
     }
 
     /**
@@ -34,6 +23,9 @@ export default class BaseMap {
      */
     public getRootElement = () : string => this.root;
 
+    /**
+     * @return Object
+     */
     public getRegion() {
         let array = [];
         Object.entries(this.data.data).forEach(([name, item]) => {
@@ -70,12 +62,19 @@ export default class BaseMap {
         return this.leaf = L.map(this.getRootElement(), this.getOptions());
     }
 
-    public addAttribution() {
+    /**
+     * @return void
+     */
+    public addAttribution() : void {
         this.leaf.attributionControl.addAttribution(
-            '<a href="https://bit.ly/IndonesianBoundaries">Octopy ID</a> | <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            '<a href="https://www.octopy.id">Octopy ID</a> | <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         );
+
     }
 
+    /**
+     * @return L.Map
+     */
     public getLeafletInstance() : L.Map {
         return this.leaf;
     }

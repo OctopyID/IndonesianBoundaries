@@ -4,10 +4,10 @@ declare var boundaryConfig : any;
 
 declare global {
     interface Window {
-        boundary : Boundary
+        $boundary : Boundary
     }
 }
 
-window.boundary = (() => {
+window.$boundary = (() => {
     return new Boundary(boundaryConfig)
 })();

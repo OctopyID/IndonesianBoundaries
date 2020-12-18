@@ -1,12 +1,18 @@
-import BaseMap from "./BaseMap";
-import Region from "./Region";
+import 'reflect-metadata';
+import { container } from 'tsyringe';
+
+import BaseMap from './BaseMap';
+import MapCollection from './MapCollection';
 
 export class Boundary {
 
+    /**
+     * @protected data : Array
+     */
     protected data : Array<any>;
 
     /**
-     * @param data
+     * @param data : <any>
      */
     public constructor(data : any) {
         for (let [root, value] of Object.entries(data)) {
@@ -16,8 +22,13 @@ export class Boundary {
         this.data = Object.values(data);
     }
 
-    render() {
-        this.data.map((map : BaseMap) => {
+    /**
+     * @return Promise<MapCollection>
+     */
+    public async render() : Promise<MapCollection> {
+        let collection = container.resolve(MapCollection);
+
+        for (let map of this.data) {
             map.drawBaseMap();
             map.addAttribution();
 
@@ -25,9 +36,15 @@ export class Boundary {
                 map.tileLayer().drawBackground();
             }
 
-            map.getRegion().map((region : Region) => {
-                region.draw(map);
-            })
-        });
+            for (const region of map.getRegion()) {
+                collection.merge({
+                    [map.getRootElement()]: {
+                        [region.getName()]: await region.draw(map)
+                    }
+                })
+            }
+        }
+
+        return collection;
     }
 }

@@ -3,27 +3,16 @@ import * as L from 'leaflet';
 export default class TileLayer {
 
     /**
-     * @protected
-     */
-    protected tile : any;
-
-    /**
-     * @protected
-     */
-    protected leaf : L.Map;
-
-    /**
-     * @protected
+     * @protected themes : Array
      */
     protected themes : Array<any>;
 
     /**
-     * @param leaf
-     * @param tile
+     * @param leaf : L.Map
+     * @param tile : <any>
      */
-    constructor(leaf : L.Map, tile : any) {
-        this.leaf = leaf;
-        this.tile = tile;
+    constructor(protected leaf : L.Map, protected tile : any) {
+        //
     }
 
     /**
@@ -55,21 +44,26 @@ export default class TileLayer {
     }
 
     /**
+     * @return object
+     */
+    private static getOptions() : object {
+        return {
+            // TODO : Options for TileLayer
+        };
+    }
+
+    /**
      * @return void
      */
     public drawBackground() : L.TileLayer {
         // @ts-ignore
-        return new L.tileLayer(this.getTileURL(), {
-            attribution: '<a href="https://bit.ly/IndonesianBoundaries">Octopy ID</a> | <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(this.leaf);
+        return new L.tileLayer(this.getTileURL(), TileLayer.getOptions()).addTo(this.leaf);
     }
 
     /**
-     * @private
-     * @return string;
+     * @return string|null;
      */
-    private getTileURL() : string {
-
+    private getTileURL() : string | null {
         if (this.hasTheme('positron')) {
             if (this.withLabel()) {
                 return 'https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png';
@@ -93,5 +87,7 @@ export default class TileLayer {
 
             return 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png';
         }
+
+        return 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png';
     }
 }
