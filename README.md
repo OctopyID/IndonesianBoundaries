@@ -1,7 +1,7 @@
-<p align="center">
-    <img src="https://poser.pugx.org/octopyid/indonesian-boundaries/license">
-    <img src="https://poser.pugx.org/octopyid/indonesian-boundaries/v">
-    <img src="https://poser.pugx.org/octopyid/indonesian-boundaries/downloads">
+<p style="align-content: center;text-align: center;">
+    <img src="https://poser.pugx.org/octopyid/indonesian-boundaries/license" alt="License">
+    <img src="https://poser.pugx.org/octopyid/indonesian-boundaries/v" alt="Version">
+    <img src="https://poser.pugx.org/octopyid/indonesian-boundaries/downloads" alt="Downloads">
 </p>
 
 # Indonesian Boundaries
@@ -19,13 +19,12 @@ Please open the link below for a list of available geometries.
 
 ## Spatial Source
 
-The spatial source I use comes from [GADM](https://gadm.org/index.html) version 3.6.
+The spatial source I use comes from Badan Pusat Statistik (BPS - Statistics Indonesia).
 
 ## Requirement
 I don't know exactly, but it's been tested on
  - Laravel 8
  - PHP 7.4
- - MySQL 8.0 with SRID support
 
 ## TODO
 Look at the [TODO.md](TODO.md) file

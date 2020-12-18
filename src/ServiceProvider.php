@@ -2,14 +2,8 @@
 
 namespace Octopy\Indonesian\Boundaries;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\View\Compilers\BladeCompiler;
-use Octopy\Indonesian\Boundaries\Commands\CitySeedCommand;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Octopy\Indonesian\Boundaries\Commands\VillageSeedCommand;
-use Octopy\Indonesian\Boundaries\Commands\DistrictSeedCommand;
-use Octopy\Indonesian\Boundaries\Commands\ProvinceSeedCommand;
-use Octopy\Indonesian\Boundaries\Http\Controllers\BoundaryController;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -18,8 +12,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register() : void
     {
-        $this->registerRoutes();
-
         $this->mergeConfigFrom(
             __DIR__ . '/../config/boundary.php', 'boundary'
         );
@@ -27,13 +19,6 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton(Boundary::class, function () {
             return new Boundary;
         });
-
-        $this->commands([
-            ProvinceSeedCommand::class,
-            CitySeedCommand::class,
-            DistrictSeedCommand::class,
-            VillageSeedCommand::class,
-        ]);
     }
 
     /**
@@ -84,13 +69,5 @@ class ServiceProvider extends BaseServiceProvider
         $compiler->directive('boundary', function () {
             return "<?php echo view('octopy::boundary', ['boundary' => app(" . Boundary::class . "::class)]); ?>";
         });
-    }
-
-    /**
-     * @return void
-     */
-    private function registerRoutes()
-    {
-        Route::get('indonesia/boundaries', BoundaryController::class);
     }
 }

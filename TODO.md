@@ -1,20 +1,8 @@
 # TODO
 
-- Geometry Sources
-  - [x] Provinces
-  - [x] Cities
-  - [x] Districts
-  - [x] Villages
-
-- HTTP Response
-  - [x] Province Geometry Response
-  - [x] City Geometry Response
-  - [x] District Geometry Response
-  - [x] Village Geometry Response
-
 - Spatial Source
-  - [ ] Compressing Source
-  - [ ] Creating an API
+  - [x] Compressing Source
+  - [x] Creating an API
 
 - Front-End Using [Leaflet](https://leafletjs.com/) With
   - [x] Customisable Marker

@@ -19,24 +19,28 @@ export default class Region {
     }
 
     draw(map : BaseMap) {
-        fetch('/indonesia/boundaries?' + stringify({
-            type: this.name,
-            data: Object.values(this.item.data).map(row => {
-                // @ts-ignore
-                return row.region;
-            }).join(',')
-        })).then(r => r.json()).then(json => {
-            // @ts-ignore
-            Object.entries(json).forEach(([index, {properties, geometry}]) => {
-                let geojson = {
-                    type: 'Feature', geometry, properties
-                };
-
-                // @ts-ignore
-                new GeoJSON(geojson, {
-                    style: this.getLayerStyle()
-                }).addTo(map.getLeafletInstance());
+        Object.values(this.item.data).map(({region}) => {
+            let endpoint = 'https://boundary.octopy.id/indonesian/boundaries?' + stringify({
+                code: region
             });
-        });
+
+            fetch(endpoint, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(r => r.json()).then(json => {
+                // @ts-ignore
+                Object.entries(json).forEach(([index, {properties, geometry}]) => {
+                    let geojson = {
+                        type: 'Feature', geometry, properties
+                    };
+
+                    // @ts-ignore
+                    new GeoJSON(geojson, {
+                        style: this.getLayerStyle()
+                    }).addTo(map.getLeafletInstance());
+                });
+            });
+        })
     }
 }
