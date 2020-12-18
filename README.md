@@ -31,20 +31,10 @@ Look at the [TODO.md](TODO.md) file
 
 ## Installation
 
-Warning: Size of Geometry source approx 910 Mb.
-
 ```bash
 composer require octopyid/indonesian-boundaries:dev-main
 
 php artisan vendor:publish --provider="Octopy\Indonesian\Boundaries\ServiceProvider"
-
-php artisan migrate
-
-php artisan laravolt:indonesia:seed
-
-php artisan octopy:seed:city
-
-php artisan octopy:seed:province
 ```
 
 ## Credits
