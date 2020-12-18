@@ -92,7 +92,7 @@ abstract class DrawableMap implements JsonSerializable
             }
 
             return $data;
-        }, $data);
+        }, array_unique($data));
     }
 
     /**
