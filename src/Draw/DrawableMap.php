@@ -5,6 +5,7 @@ namespace Octopy\Indonesian\Boundaries\Draw;
 use Closure;
 use JsonSerializable;
 use InvalidArgumentException;
+use Illuminate\Support\Collection;
 use Octopy\Indonesian\Boundaries\Data;
 use Octopy\Indonesian\Boundaries\Styles\Style;
 use Octopy\Indonesian\Boundaries\Draw\Exception\InvalidDataLengthException;
@@ -37,7 +38,7 @@ abstract class DrawableMap implements JsonSerializable
      * @param  array $conf
      * @throws InvalidDataLengthException
      */
-    public function __construct(array $data = [], $conf = [])
+    public function __construct($data = [], $conf = [])
     {
         $this->data($data);
         $this->conf(array_merge([
@@ -74,11 +75,15 @@ abstract class DrawableMap implements JsonSerializable
     }
 
     /**
-     * @param  array $data
+     * @param  array|Collection $data
      * @throws InvalidDataLengthException
      */
-    public function data(array $data)
+    public function data($data)
     {
+        if ($data instanceof Collection) {
+            $data = $data->toArray();
+        }
+
         $this->data = array_map(function ($data) {
 
             if (! $data instanceof Data) {

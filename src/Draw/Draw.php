@@ -17,7 +17,7 @@ class Draw implements JsonSerializable
      * @return DrawProvince
      * @throws Exception\InvalidDataLengthException
      */
-    public function province(array $data = [], $conf = []) : DrawProvince
+    public function province($data = [], $conf = []) : DrawProvince
     {
         return $this->drawable[] = new DrawProvince($data, $conf);
     }
@@ -28,7 +28,7 @@ class Draw implements JsonSerializable
      * @return DrawCity
      * @throws Exception\InvalidDataLengthException
      */
-    public function city(array $data = [], $conf = []) : DrawCity
+    public function city($data = [], $conf = []) : DrawCity
     {
         return $this->drawable[] = new DrawCity($data, $conf);
     }
@@ -39,7 +39,7 @@ class Draw implements JsonSerializable
      * @return DrawDistrict
      * @throws Exception\InvalidDataLengthException
      */
-    public function district(array $data = [], $conf = []) : DrawDistrict
+    public function district($data = [], $conf = []) : DrawDistrict
     {
         return $this->drawable[] = new DrawDistrict($data, $conf);
     }
@@ -50,7 +50,7 @@ class Draw implements JsonSerializable
      * @return DrawVillage
      * @throws Exception\InvalidDataLengthException
      */
-    public function village(array $data = [], $conf = []) : DrawVillage
+    public function village($data = [], $conf = []) : DrawVillage
     {
         return $this->drawable[] = new DrawVillage($data, $conf);
     }
