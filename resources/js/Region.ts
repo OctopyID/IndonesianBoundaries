@@ -39,16 +39,20 @@ export default class Region {
                 return response.json();
             });
 
-            let geojson = {
-                type: 'Feature',
-                geometry: json.geometry,
-                properties: json.properties,
-            };
+            if (json.message !== undefined) {
+                console.log(json.message);
+            } else {
+                let geojson = {
+                    type: 'Feature',
+                    geometry: json.geometry,
+                    properties: json.properties,
+                };
 
-            // @ts-ignore
-            container[row.region] = new GeoJSON(geojson, {
-                style: this.getLayerStyle()
-            }).addTo(map.getLeafletInstance());
+                // @ts-ignore
+                container[row.region] = new GeoJSON(geojson, {
+                    style: this.getLayerStyle()
+                }).addTo(map.getLeafletInstance());
+            }
         }
 
         return container;
