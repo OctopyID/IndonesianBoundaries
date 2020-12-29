@@ -16,9 +16,7 @@ class ServiceProvider extends BaseServiceProvider
             __DIR__ . '/../config/boundary.php', 'boundary'
         );
 
-        $this->app->singleton(Boundary::class, function () {
-            return new Boundary;
-        });
+        $this->app->singleton(Boundary::class, fn() => new Boundary);
     }
 
     /**
@@ -31,9 +29,9 @@ class ServiceProvider extends BaseServiceProvider
         if ($this->app->resolved('blade.compiler')) {
             $this->registerDirective($this->app['blade.compiler']);
         } else {
-            $this->app->afterResolving('blade.compiler', function (BladeCompiler $compiler) {
-                $this->registerDirective($compiler);
-            });
+            $this->app->afterResolving(
+                'blade.compiler', fn(BladeCompiler $compiler) => $this->registerDirective($compiler)
+            );
         }
 
         $this->loadViewsFrom(
@@ -48,16 +46,12 @@ class ServiceProvider extends BaseServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../database/migrations' => database_path('migrations'),
-            ], 'migrations');
-
-            $this->publishes([
                 __DIR__ . '/../public' => public_path('vendor/octopyid/boundary'),
             ], 'boundary-assets');
 
             $this->publishes([
                 __DIR__ . '/../config/boundary.php' => config_path('boundary.php'),
-            ], 'boundary-conf');
+            ], 'boundary-config');
         }
     }
 
