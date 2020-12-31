@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-const liveReload = require("webpack-livereload-plugin");
+const LiveReload = require("webpack-livereload-plugin");
 
 /*
  |--------------------------------------------------------------------------
@@ -16,13 +16,13 @@ mix.disableSuccessNotifications();
 
 mix.webpackConfig({
     plugins: [
-        new liveReload()
+        new LiveReload()
     ]
 });
 
 mix.setPublicPath('public')
-    .sass('resources/css/app.scss', 'public/app.css')
-    .ts('resources/js/App.ts', 'public/app.js')
+    .sass('resources/css/app.scss', 'public/app.css').sourceMaps()
+    .ts('resources/js/App.ts', 'public/app.js').sourceMaps()
     .version()
     .copy('public', '../public/vendor/octopyid/boundary')
     .webpackConfig({

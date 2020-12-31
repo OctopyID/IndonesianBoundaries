@@ -1,87 +1,48 @@
-import * as L from 'leaflet';
+import { TileLayer as LeafletTileLayer } from "leaflet";
+import { inject, singleton } from "tsyringe";
+import Map from "./Map";
 
-export default class TileLayer {
+/**
+ * @method element(element : string)
+ */
+@singleton()
+export default class TileLayer extends LeafletTileLayer {
 
-    /**
-     * @protected themes : Array
-     */
-    protected themes : Array<any>;
+    readonly NO_LABEL = false;
 
-    /**
-     * @param leaf : L.Map
-     * @param tile : <any>
-     */
-    constructor(protected leaf : L.Map, protected tile : any) {
-        //
+    readonly WITH_LABEL = true;
+
+    protected map : Map;
+
+    protected tile : LeafletTileLayer;
+
+    constructor(@inject('map')map : Map) {
+        super('', {
+            //
+        });
+
+        this.map = map;
     }
 
-    /**
-     * @return string|boolean
-     */
-    public getTheme() : string | boolean {
-        return this.tile.theme;
-    }
-
-    /**
-     * @return boolean
-     */
-    public isEnabled() : boolean {
-        return this.getTheme() !== null && this.getTheme() !== '' && this.getTheme() !== false;
-    }
-
-    /**
-     * @return boolean
-     */
-    public hasTheme(theme : string) : boolean {
-        return this.tile.theme === theme;
-    }
-
-    /**
-     * @return boolean
-     */
-    public withLabel() : boolean {
-        return this.tile.label;
-    }
-
-    /**
-     * @return object
-     */
-    private static getOptions() : object {
-        return {
-            // TODO : Options for TileLayer
-        };
-    }
-
-    /**
-     * @return void
-     */
-    public drawBackground() : L.TileLayer {
-        // @ts-ignore
-        return new L.tileLayer(this.getTileURL(), TileLayer.getOptions()).addTo(this.leaf);
-    }
-
-    /**
-     * @return string|null;
-     */
-    private getTileURL() : string | null {
-        if (this.hasTheme('positron')) {
-            if (this.withLabel()) {
+    protected static tileURL(theme : string | boolean, label : boolean = false) : string | null {
+        if (theme === 'positron') {
+            if (label) {
                 return 'https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png';
             }
 
             return 'https://{s}.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png';
         }
 
-        if (this.hasTheme('voyager')) {
-            if (this.withLabel()) {
+        if (theme === 'voyage') {
+            if (label) {
                 return 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png';
             }
 
             return 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png';
         }
 
-        if (this.hasTheme('matter')) {
-            if (this.withLabel()) {
+        if (theme === 'matter') {
+            if (label) {
                 return 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png';
             }
 
@@ -90,4 +51,27 @@ export default class TileLayer {
 
         return 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png';
     }
+
+    public render() {
+        if (this.enabled()) {
+            this.addTo(this.map.leaflet()).setTheme(this.getConfigTheme(), this.label());
+        }
+    }
+
+    public enabled() : boolean {
+        return this.getConfigTheme() !== false && this.getConfigTheme() !== null && this.getConfigTheme() !== '';
+    }
+
+    public setTheme(theme : string | boolean = null, label : boolean = false) : this {
+        return this.setUrl(TileLayer.tileURL(theme, label));
+    }
+
+    public label() : boolean {
+        return this.map.config('background.label');
+    }
+
+    protected getConfigTheme() : string | null | boolean {
+        return this.map.config('background.theme', false);
+    }
+
 }

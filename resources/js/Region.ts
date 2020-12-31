@@ -1,67 +1,35 @@
-// @ts-ignore
-import { GeoJSON, Map } from "leaflet";
-import BaseMap from "./BaseMap";
-import { stringify } from "querystring";
+import { GeoJSON } from "leaflet";
+import Map from "./Map";
 
-export default class Region {
-    /**
-     * @param name
-     * @param item
-     */
-    constructor(private name : string, private item : any) {
-        //
+export default class Region extends GeoJSON<any> {
+    public parent : Map;
+
+    constructor(data, options, map : Map) {
+        super(data, options);
+        this.parent = map;
     }
 
-    /**
-     * @return string
-     */
-    public getName() : string {
-        return this.name;
+    public regionCode() {
+        return this.getProperties().code;
     }
 
-    /**
-     * @param  map : BaseMap
-     * @return object
-     */
-    public async draw(map : BaseMap) : Promise<object> {
-        let container = {};
+    public regionName() {
+        return this.getProperties().name;
+    }
 
-        for (const row of this.item.data) {
-            let endpoint = 'https://boundary.octopy.id/indonesian/boundaries?' + stringify({
-                code: row.region
-            });
+    public getProperties(id : number = null) {
+        return this.getFeature(id).properties;
+    }
 
-            let json = await fetch(endpoint, {
-                headers: {
-                    'Accept': 'application/json',
-                }
-            }).then(response => {
-                return response.json();
-            });
+    public getFeature(id : number = null) {
+        return this.getLayer(id).feature;
+    }
 
-            if (json.message !== undefined) {
-                console.log(json.message);
-            } else {
-                let geojson = {
-                    type: 'Feature',
-                    geometry: json.geometry,
-                    properties: json.properties,
-                };
-
-                // @ts-ignore
-                container[row.region] = new GeoJSON(geojson, {
-                    style: this.getLayerStyle()
-                }).addTo(map.getLeafletInstance());
-            }
+    public getLayer(id : number = null) : any {
+        if (id) {
+            return super.getLayer(id);
         }
 
-        return container;
-    }
-
-    /**
-     * @return object
-     */
-    protected getLayerStyle() : object {
-        return this.item.conf.layer;
+        return super.getLayers()[0];
     }
 }
