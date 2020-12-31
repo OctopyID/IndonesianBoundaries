@@ -6,16 +6,25 @@ import Map from "./Map";
  * @method element(element : string)
  */
 @singleton()
-export default class TileLayer {
-    private map : Map;
+export default class TileLayer extends LeafletTileLayer {
 
-    private tile : LeafletTileLayer;
+    readonly NO_LABEL = false;
+
+    readonly WITH_LABEL = true;
+
+    protected map : Map;
+
+    protected tile : LeafletTileLayer;
 
     constructor(@inject('map')map : Map) {
+        super('', {
+            //
+        });
+
         this.map = map;
     }
 
-    private static tileURL(theme : string | boolean, label : boolean = false) : string | null {
+    protected static tileURL(theme : string | boolean, label : boolean = false) : string | null {
         if (theme === 'positron') {
             if (label) {
                 return 'https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png';
@@ -44,24 +53,25 @@ export default class TileLayer {
     }
 
     public render() {
-        this.tile = new LeafletTileLayer(TileLayer.tileURL(this.theme(), this.label()), {
-            //
-        }).addTo(this.map.leaflet());
+        if (this.enabled()) {
+            this.addTo(this.map.leaflet()).setTheme(this.getConfigTheme(), this.label());
+        }
     }
 
     public enabled() : boolean {
-        return this.theme() !== false && this.theme() !== null && this.theme() !== '';
+        return this.getConfigTheme() !== false && this.getConfigTheme() !== null && this.getConfigTheme() !== '';
     }
 
-    public theme(theme : string | boolean = null, label : boolean = false) : string | boolean | null {
-        if (theme !== null) {
-            this.tile.setUrl(TileLayer.tileURL(theme, label));
-        }
-
-        return this.map.config('background.theme', false);
+    public setTheme(theme : string | boolean = null, label : boolean = false) : this {
+        return this.setUrl(TileLayer.tileURL(theme, label));
     }
 
     public label() : boolean {
         return this.map.config('background.label');
     }
+
+    protected getConfigTheme() : string | null | boolean {
+        return this.map.config('background.theme', false);
+    }
+
 }

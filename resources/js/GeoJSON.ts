@@ -6,7 +6,7 @@ import Region from "./Region";
 export default class GeoJSON {
     protected data : any;
 
-    private conf : Collection
+    protected conf : Collection
 
     constructor(item) {
         this.data = item.get('data');
@@ -38,7 +38,7 @@ export default class GeoJSON {
 
                 return new Region(geojson, {
                     style: this.conf.get('layer').reverse()
-                }).addTo(map.leaflet());
+                }, map).addTo(map.leaflet());
             }
         });
     }

@@ -10,6 +10,8 @@ export default class Map {
 
     protected conf : Config;
 
+    protected tiles : Object;
+
     protected layers : Collection;
 
     protected instance : LeafletMap;
@@ -92,11 +94,18 @@ export default class Map {
     }
 
     public tileLayer() {
+        container.clearInstances();
+
         container.register('map', {
             useValue: this
         });
 
-        return container.resolve(TileLayer);
+        let name = this.conf.getRootElement();
+        if (this.tiles.hasOwnProperty(name)) {
+            return this.tiles[name];
+        }
+
+        return this.tiles[name] = container.resolve(TileLayer);
     }
 
     public config(key : string | null = null, value : any = null) {
