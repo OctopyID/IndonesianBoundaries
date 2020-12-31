@@ -1,49 +1,31 @@
-import 'reflect-metadata';
-import { container } from 'tsyringe';
+import Collection from "./Collection";
+import Config from "./Config";
+import Map from "./Map";
 
-import BaseMap from './BaseMap';
-import MapCollection from './MapCollection';
+export default class Boundary {
+    private collection : Collection;
 
-export class Boundary {
-
-    /**
-     * @protected data : Array
-     */
-    protected data : Array<any>;
-
-    /**
-     * @param data : <any>
-     */
-    public constructor(data : any) {
-        for (let [root, value] of Object.entries(data)) {
-            data[root] = new BaseMap(root, value);
-        }
-
-        this.data = Object.values(data);
+    constructor(collection : Collection) {
+        this.collection = collection;
     }
 
-    /**
-     * @return Promise<MapCollection>
-     */
-    public async render() : Promise<MapCollection> {
-        let collection = container.resolve(MapCollection);
+    private static getCollection() : Collection {
+        let collection = new Collection;
 
-        for (let map of this.data) {
-            map.drawBaseMap();
-            map.addAttribution();
+        collection.macro('element', function (element : string) {
+            return this.skipWhile(map => ! map.hasElement(element)).first();
+        });
 
-            if (map.tileLayer().isEnabled()) {
-                map.tileLayer().drawBackground();
-            }
+        return collection;
+    }
 
-            for (const region of map.getRegion()) {
-                collection.merge({
-                    [map.getRootElement()]: {
-                        [region.getName()]: await region.draw(map)
-                    }
-                })
-            }
-        }
+    public async render() : Promise<Collection> {
+        let collection = Boundary.getCollection();
+        this.collection.map(async (config : Collection, element : string) => {
+            collection.push(
+                await (new Map(new Config(element, config))).render()
+            );
+        });
 
         return collection;
     }

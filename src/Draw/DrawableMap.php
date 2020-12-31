@@ -80,6 +80,10 @@ abstract class DrawableMap implements JsonSerializable
      */
     public function data($data)
     {
+        if (! is_array($data)) {
+            $data = [$data];
+        }
+
         if ($data instanceof Collection) {
             $data = $data->toArray();
         }
