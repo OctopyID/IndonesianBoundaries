@@ -10,12 +10,13 @@ export default class Map {
 
     protected conf : Config;
 
-    protected regions : Collection;
+    protected layers : Collection;
 
     protected instance : LeafletMap;
 
     constructor(config : Config) {
         this.conf = config;
+        this.tiles = {};
     }
 
     public render() {
@@ -27,19 +28,63 @@ export default class Map {
             this.tileLayer().render();
         }
 
-        this.regions = this.assignMapRegion().map((region : GeoJSON) => {
+        this.layers = this.assignMapRegion().map((region : GeoJSON) => {
             return region.render(this);
         });
 
         return this;
     }
 
-    public prov() {
-        return this.region().get('prov');
+    public provinces(callback : CallableFunction | null = null) {
+        if (callback) {
+            return this.regions().get('prov').map(row => row.then(layer => {
+                return callback(layer);
+            }));
+        }
+
+        return this.regions().get('prov');
     }
 
-    public region() {
-        return this.regions;
+    public cities(callback : CallableFunction | null = null) {
+        if (callback) {
+            return this.regions().get('city').map(row => row.then(layer => {
+                return callback(layer);
+            }));
+        }
+
+        return this.regions().get('city');
+    }
+
+    public districts(callback : CallableFunction | null = null) {
+        if (callback) {
+            return this.regions().get('dist').map(row => row.then(layer => {
+                return callback(layer);
+            }));
+        }
+
+        return this.regions().get('dist');
+    }
+
+    public villages(callback : CallableFunction | null = null) {
+        if (callback) {
+            return this.regions().get('vill').map(row => row.then(layer => {
+                return callback(layer);
+            }));
+        }
+
+        return this.regions().get('vill');
+    }
+
+    public regions(callback : CallableFunction | null = null) : any {
+        if (callback) {
+            return this.layers.map(element => {
+                return element.map(region => region.then(layer => {
+                    return callback(layer);
+                }))
+            });
+        }
+
+        return this.layers;
     }
 
     public leaflet() : LeafletMap {

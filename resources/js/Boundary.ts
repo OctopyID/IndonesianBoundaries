@@ -3,6 +3,7 @@ import Config from "./Config";
 import Map from "./Map";
 
 export default class Boundary {
+
     private collection : Collection;
 
     constructor(collection : Collection) {
@@ -12,8 +13,20 @@ export default class Boundary {
     private static getCollection() : Collection {
         let collection = new Collection;
 
-        collection.macro('element', function (element : string) {
-            return this.skipWhile(map => ! map.hasElement(element)).first();
+        collection.macro('element', function (dom : string) {
+            let result = this.skipWhile(map => ! map.hasElement(dom));
+
+            if (result.count() === 0) {
+                throw new DOMException(`Cannot find DOM with ID ${ dom }, make sure <div id="${ dom }"> is available.`);
+            }
+
+            return result.first();
+        });
+
+        collection.macro('elements', function (callback : CallableFunction) {
+            return this.map(map => {
+                return map.regions(callback);
+            });
         });
 
         return collection;

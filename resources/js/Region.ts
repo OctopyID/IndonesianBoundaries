@@ -1,6 +1,14 @@
 import { GeoJSON } from "leaflet";
+import Map from "./Map";
 
 export default class Region extends GeoJSON<any> {
+    public parent : Map;
+
+    constructor(data, options, map : Map) {
+        super(data, options);
+        this.parent = map;
+    }
+
     public regionCode() {
         return this.getProperties().code;
     }
