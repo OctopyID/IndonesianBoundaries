@@ -1,0 +1,11 @@
+# IDEA
+.idea
+
+# Project
+false
+vendor
+node_modules
+composer.lock
+.phpunit.cache
+public/mix-manifest.json
+resources/backup
