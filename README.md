@@ -1,4 +1,4 @@
-<p style="align-content: center;text-align: center;">
+<p align="center">
     <img src="https://img.shields.io/packagist/l/octopyid/indonesian-boundaries.svg?style=for-the-badge" alt="License">
     <img src="https://img.shields.io/packagist/v/octopyid/indonesian-boundaries.svg?style=for-the-badge" alt="Version">
     <img src="https://img.shields.io/packagist/dt/octopyid/indonesian-boundaries.svg?style=for-the-badge" alt="Downloads">
