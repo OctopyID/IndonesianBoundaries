@@ -109,12 +109,12 @@ abstract class DrawableMap implements JsonSerializable
      */
     public function data($data)
     {
-        if (! is_array($data)) {
-            $data = [$data];
-        }
-
         if ($data instanceof Collection) {
             $data = $data->toArray();
+        }
+
+        if (! is_array($data)) {
+            $data = [$data];
         }
 
         $this->regions = array_map(function ($data) {
@@ -152,8 +152,8 @@ abstract class DrawableMap implements JsonSerializable
     public function jsonSerialize() : array
     {
         return [
-            'style'   => $this->style,
-            'marker'  => $this->marker,
+            'style' => $this->style,
+            'marker' => $this->marker,
             'regions' => $this->regions,
         ];
     }
