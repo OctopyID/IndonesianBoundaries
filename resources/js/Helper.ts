@@ -19,7 +19,7 @@ export default class Helper
      * @param icon string
      */
     public static getIcon(icon : string) : string {
-        return 'https://geo.octopy.io/vendor/octopyid/boundary/images/markers/' + icon;
+        return '/vendor/octopyid/boundary/images/markers/' + icon;
     }
 
     /**
@@ -29,7 +29,7 @@ export default class Helper
     public static async fetchGeometry(region : number | Collection<any>) : Promise<any> {
         let code = region instanceof Collection ? region.get('code') : region;
 
-        return await fetch('https://boundary.octopy.id/indonesian/boundaries?' + stringify({
+        return await fetch('https://boundary.octopy.id/api/geometry?' + stringify({
             code: code
         }))
             .then(response => response.json());
@@ -42,7 +42,7 @@ export default class Helper
     public static async fetchRegions(region : number | Collection<any>) {
         let code = region instanceof Collection ? region.get('code') : region;
 
-        return await fetch('https://boundary.octopy.id/indonesian/regions?' + stringify({
+        return await fetch('https://boundary.octopy.id/api/regions?' + stringify({
             code: code
         }))
             .then(response => response.json());
