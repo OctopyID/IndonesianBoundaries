@@ -69,7 +69,7 @@ class ServiceProvider extends BaseServiceProvider
         });
         
         $compiler->directive('boundaryStyles', function (){
-            return '<?php echo <link rel="stylesheet" href="' . asset('vendor/octopyid/boundary/app.css') . '">';
+            return '<link rel="stylesheet" href="' . asset('vendor/octopyid/boundary/app.css') . '">';
         });
     }
 }
