@@ -64,8 +64,12 @@ class ServiceProvider extends BaseServiceProvider
      */
     private function registerDirective(BladeCompiler $compiler)
     {
-        $compiler->directive('boundary', function () {
+        $compiler->directive('boundaryScript', function () {
             return "<?php echo view('octopy::boundary', ['boundary' => app(" . Boundary::class . "::class)]); ?>";
+        });
+        
+        $compiler->directive('boundaryStyles', function (){
+            return '<?php echo <link rel="stylesheet" href="' . asset('vendor/octopyid/boundary/app.css') . '">';
         });
     }
 }

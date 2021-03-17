@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="{{ asset('vendor/octopyid/boundary/app.css') }}">
 <script type="text/javascript">
     window.boundaries = @json(
 	    $boundary, config('app.debug', false) ? JSON_PRETTY_PRINT : null
