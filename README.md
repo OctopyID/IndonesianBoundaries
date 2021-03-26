@@ -29,7 +29,7 @@ php artisan vendor:publish --provider="Octopy\Indonesian\Boundaries\ServiceProvi
 
 ### Basic Usage
 
-- /resource/views/map.blade.php
+- resources/views/map.blade.php
 
 ```html
 <!doctype html>
