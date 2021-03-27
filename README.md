@@ -12,6 +12,13 @@ Is a Laravel package that provides a basic map of the country of Indonesia.
 
 The spatial source I use comes from Badan Pusat Statistik (BPS - Statistics Indonesia).
 
+## Disclaimer
+Due to the limited time for the maintainer to search for the latest data for each boundary, we are not obliged to make the changes you requested ASAP. 
+
+If you have the latest data and want us to update the data we have, please send it to [supianidz@octopy.id](mailto:supianidz@octopy.id). 
+
+Data can be either JSON or SHP provided it has a region code in its properties.
+
 ## Requirement
 
 I don't know exactly, but it's been tested on
