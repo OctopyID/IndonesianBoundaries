@@ -41,7 +41,7 @@ export default class Map extends BaseMap
         }
 
         // Set Attribution
-        this.attribution('<a href="https://www.octopy.id/">Octopy ID</a>');
+        this.attribution('<a href="https://github.com/OctopyID/IndonesianBoundaries">OctopyID - Indonesian Boundary</a>');
     }
 
     /**
