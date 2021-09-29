@@ -29,7 +29,7 @@ export default class Helper
     public static async fetchGeometry(region : number | Collection<any>) : Promise<any> {
         let code = region instanceof Collection ? region.get('code') : region;
 
-        return await fetch('https://boundary.octopy.id/api/geometry?' + stringify({
+        return await fetch('https://boundary.octopy.dev/api/geometry?' + stringify({
             code: code
         }))
             .then(response => response.json());
@@ -42,7 +42,7 @@ export default class Helper
     public static async fetchRegions(region : number | Collection<any>) {
         let code = region instanceof Collection ? region.get('code') : region;
 
-        return await fetch('https://boundary.octopy.id/api/regions?' + stringify({
+        return await fetch('https://boundary.octopy.dev/api/regions?' + stringify({
             code: code
         }))
             .then(response => response.json());
